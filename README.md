@@ -16,29 +16,37 @@ It must include at least two models on the backend and multiple components on th
 Clone both backend and frontend repos locally using the SSH Key contained within the Code button above, then follow the steps below in a local Terminal window:
 
 Open repos in your code editor of choice:
+```
 code .
+```
 Install the node modules:
+```
 npm install
+```
 For the backend, run:
+```
 npm run dev
+```
 For the frontend, run:
+```
 Npm start
+```
 
 Technologies Used
 
-React.js
-MongoDB
-Mongoose
-Express
-Node.js
-MUI
-SASS
-Git
-GitHub
-Excalidraw
-Slack
-Trello
-Zoom
+- React.js
+- MongoDB
+- Mongoose
+- Express
+- Node.js
+- MUI
+- SASS
+- Git
+- GitHub
+- Excalidraw
+- Slack
+- Trello
+- Zoom
 
 # Planning
 
@@ -48,16 +56,42 @@ During the planning phase, the team defined the scope and features of the applic
 
 The build process for the Full Stacked workout app involved several stages, including planning, design, development, and testing. During the development phase, the team divided the tasks among members based on their areas of expertise and interest. My role in the project was to develop the API in the backend, as well as to create the routing and use React hooks in the frontend to display the required information from the database.
 
-# Backend API Development
+## Backend API Development
 As the backend API developer, I was responsible for designing and implementing a RESTful API that allowed the frontend to communicate with the backend and to retrieve data from the database. This involved defining the API endpoints, creating the database schema and models, and implementing the logic for handling HTTP requests and responses.
 
-…CODE…
+```js
+const getAllWorkouts = async (_req, res, next) => {
+  try {
+    const workouts = await Workouts.find();
+    return res.status(200).json(workouts);
+  } catch (e) {
+    next(e);
+  }
+};
+
+async function searchWorkouts(req, res, next) {
+  console.log(req.query);
+  try {
+    const { search } = req.query;
+    const workouts = await Workouts.find({
+      $or: [
+        { name: { $regex: search, $options: 'i' } },
+        { description: { $regex: search, $options: 'i' } },
+        { type: { $regex: search, $options: 'i' } },
+      ],
+    });
+    return res.status(200).json(workouts);
+  } catch (e) {
+    next(e);
+  }
+}
+```
 
 I also had to ensure that the API was secure and scalable, by implementing authentication and authorization mechanisms, as well as optimising the database queries and indexing for fast and efficient data retrieval. 
 
 …CODE…
 
-Frontend Development
+## Frontend Development
 In the frontend, I was responsible for creating the routing and using React hooks to display the required information from the database. This involved creating the necessary React components and designing the UI and layout of the application.
 
 …CODE…
